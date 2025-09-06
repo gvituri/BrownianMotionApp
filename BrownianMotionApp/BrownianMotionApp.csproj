@@ -65,10 +65,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\Interfaces\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\BrownianMotionChartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
