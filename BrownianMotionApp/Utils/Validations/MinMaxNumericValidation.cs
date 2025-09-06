@@ -15,10 +15,10 @@ namespace BrownianMotionApp.Utils.Validations {
             if (value is string text && !string.IsNullOrWhiteSpace(text)) {
                 double numericValue;
 
-                if (int.TryParse(text, out int intValue)) {
-                    numericValue = intValue;
-                } else if (double.TryParse(text, out double doubleValue)) {
+                if (double.TryParse(text, out double doubleValue)) {
                     numericValue = doubleValue;
+                } else if (int.TryParse(text, out int intValue)) {
+                    numericValue = intValue;
                 } else {
                     return false;
                 }

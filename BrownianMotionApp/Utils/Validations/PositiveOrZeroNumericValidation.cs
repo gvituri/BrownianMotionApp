@@ -11,13 +11,14 @@ namespace BrownianMotionApp.Utils.Validations {
 
         public bool Validate(object value) {
             if (value is string text && !string.IsNullOrWhiteSpace(text)) {
+                if (double.TryParse(text, out double doubleValue)) {
+                    return doubleValue >= 0;
+                }
+
                 if (int.TryParse(text, out int intValue)) {
                     return intValue >= 0;
                 }
 
-                if (double.TryParse(text, out double doubleValue)) {
-                    return doubleValue >= 0;
-                }
             }
 
             return false;
