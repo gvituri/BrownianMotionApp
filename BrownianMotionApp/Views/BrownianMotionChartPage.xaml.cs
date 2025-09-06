@@ -23,8 +23,8 @@ public partial class BrownianMotionChartPage : ContentPage {
 
         viewModel.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(viewModel.Prices)) {
-                _drawable.Prices = viewModel.Prices;
+            if (e.PropertyName == nameof(viewModel.Lines)) {
+                _drawable.Lines = viewModel.Lines;
                 brownianMotionChartView.Invalidate();
             }
         };

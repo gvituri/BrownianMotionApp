@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrownianMotionApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,69 +7,139 @@ using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Utils.Drawables {
     public class BrownianMotionDrawable : IDrawable {
-        public double[]? Prices { get; set; }
+        public List<LineDataDTO> Lines { get; set; } = new List<LineDataDTO>();
+
+        private const float MARGIN_LEFT = 80;
+        private const float MARGIN_BOTTOM = 60;
+        private const float MARGIN_TOP = 20;
+        private const float MARGIN_RIGHT = 20;
+
+        public void AddLine(double[] prices, Color color, string name = "") {
+            Lines.Add(new LineDataDTO(prices, color, name));
+        }
+
+        public void ClearLines() {
+            Lines.Clear();
+        }
 
         public void Draw(ICanvas canvas, RectF dirtyRect) {
-            if (Prices == null || Prices.Length < 2)
+            if (Lines == null || !Lines.Any() || Lines.All(l => l.Prices == null || l.Prices.Length < 2))
                 return;
 
             float width = dirtyRect.Width;
             float height = dirtyRect.Height;
 
-            double min = double.MaxValue;
-            double max = double.MinValue;
-            foreach (var p in Prices) {
-                if (p < min) min = p;
-                if (p > max) max = p;
+            float chartWidth = width - MARGIN_LEFT - MARGIN_RIGHT;
+            float chartHeight = height - MARGIN_BOTTOM - MARGIN_TOP;
+
+            var (globalMin, globalMax) = GetGlobalMinMax();
+
+            DrawAxes(canvas, width, height);
+            DrawAxisLabels(canvas, width, height);
+            DrawScaleLabels(canvas, height, globalMin, globalMax);
+            DrawDayLabels(canvas, width, height);
+            DrawLines(canvas, chartWidth, chartHeight, globalMin, globalMax);
+        }
+
+        private (double min, double max) GetGlobalMinMax() {
+            double globalMin = double.MaxValue;
+            double globalMax = double.MinValue;
+
+            foreach (var line in Lines) {
+                if (line.Prices == null) continue;
+
+                foreach (var price in line.Prices) {
+                    if (price < globalMin) globalMin = price;
+                    if (price > globalMax) globalMax = price;
+                }
             }
 
-            float marginLeft = 50;
-            float marginBottom = 40;
-            float chartWidth = width - marginLeft - 10;
-            float chartHeight = height - marginBottom - 10;
+            return (globalMin, globalMax);
+        }
 
+        private void DrawAxes(ICanvas canvas, float width, float height) {
             canvas.StrokeColor = Colors.White;
             canvas.StrokeSize = 1;
 
-            canvas.DrawLine(marginLeft, 10, marginLeft, height - marginBottom);
-            canvas.DrawLine(marginLeft, height - marginBottom, width - 10, height - marginBottom);
+            canvas.DrawLine(MARGIN_LEFT, MARGIN_TOP, MARGIN_LEFT, height - MARGIN_BOTTOM);
+            canvas.DrawLine(MARGIN_LEFT, height - MARGIN_BOTTOM, width - MARGIN_RIGHT, height - MARGIN_BOTTOM);
+        }
 
-            float stepX = chartWidth / (Prices.Length - 1);
+        private void DrawAxisLabels(ICanvas canvas, float width, float height) {
+            float chartHeight = height - MARGIN_TOP - MARGIN_BOTTOM;
+            float chartWidth = width - MARGIN_LEFT - MARGIN_RIGHT;
 
-            var path = new PathF();
-            for (int i = 0; i < Prices.Length; i++) {
-                float x = marginLeft + i * stepX;
-                float y = (float)(height - marginBottom - ((Prices[i] - min) / (max - min)) * chartHeight);
+            canvas.FontColor = Colors.White;
+            canvas.FontSize = 14;
 
-                if (i == 0) path.MoveTo(x, y);
-                else path.LineTo(x, y);
-            }
+            canvas.DrawString("Dias", MARGIN_LEFT + chartWidth / 2, MARGIN_TOP + chartHeight + 20, 50, 20,
+                HorizontalAlignment.Left, VerticalAlignment.Top);
+        }
 
-            canvas.StrokeColor = Colors.MediumPurple;
-            canvas.StrokeSize = 2;
-            canvas.DrawPath(path);
+        private void DrawScaleLabels(ICanvas canvas, float height, double globalMin, double globalMax) {
+            float chartHeight = height - MARGIN_TOP - MARGIN_BOTTOM;
 
             canvas.FontColor = Colors.White;
             canvas.FontSize = 12;
 
-            string minLabel = ((int)Math.Round(min)).ToString();
-            string midLabel = ((int)Math.Round((min + max) / 2)).ToString();
-            string maxLabel = ((int)Math.Round(max)).ToString();
+            string minLabel = ((int)Math.Round(globalMin)).ToString("C");
+            string midLabel = ((int)Math.Round((globalMin + globalMax) / 2)).ToString("C");
+            string maxLabel = ((int)Math.Round(globalMax)).ToString("C");
 
-            canvas.DrawString(maxLabel, 0, 10, marginLeft - 5, 20,
-                HorizontalAlignment.Right, VerticalAlignment.Top);
-            canvas.DrawString(midLabel, 0, height / 2 - 10, marginLeft - 5, 20,
-                HorizontalAlignment.Right, VerticalAlignment.Center);
-            canvas.DrawString(minLabel, 0, height - marginBottom - 20, marginLeft - 5, 20,
+            // Y-axis scale labels (inside the margins)
+            canvas.DrawString(maxLabel, 0, MARGIN_TOP - 6, MARGIN_LEFT - 5, 20,
                 HorizontalAlignment.Right, VerticalAlignment.Bottom);
+            canvas.DrawString(midLabel, 0, MARGIN_TOP + chartHeight / 2 - 6, MARGIN_LEFT - 5, 20,
+                HorizontalAlignment.Right, VerticalAlignment.Center);
+            canvas.DrawString(minLabel, 0, MARGIN_TOP + chartHeight - 6, MARGIN_LEFT - 5, 20,
+                HorizontalAlignment.Right, VerticalAlignment.Top);
+        }
 
-            int lastDay = Prices.Length - 1;
-            canvas.DrawString("0", marginLeft, height - marginBottom + 5, 20, 20,
-                HorizontalAlignment.Center, VerticalAlignment.Top);
-            canvas.DrawString((lastDay / 2).ToString(), marginLeft + chartWidth / 2, height - marginBottom + 5, 40, 20,
-                HorizontalAlignment.Center, VerticalAlignment.Top);
-            canvas.DrawString(lastDay.ToString(), marginLeft + chartWidth, height - marginBottom + 5, 40, 20,
-                HorizontalAlignment.Center, VerticalAlignment.Top);
+        private void DrawDayLabels(ICanvas canvas, float width, float height) {
+            if (!Lines.Any()) return;
+
+            int maxDays = Lines.Max(l => l.Prices?.Length ?? 0);
+            if (maxDays <= 1) return;
+
+            float chartWidth = width - MARGIN_LEFT - MARGIN_RIGHT;
+            float chartHeight = height - MARGIN_TOP - MARGIN_BOTTOM;
+
+            canvas.FontColor = Colors.White;
+            canvas.FontSize = 12;
+
+            canvas.DrawString("0", MARGIN_LEFT, MARGIN_TOP + chartHeight + 5, 20, 20,
+                HorizontalAlignment.Left, VerticalAlignment.Top);
+            canvas.DrawString((maxDays / 2).ToString(), MARGIN_LEFT + chartWidth / 2, MARGIN_TOP + chartHeight + 5, 40, 20,
+                HorizontalAlignment.Left, VerticalAlignment.Top);
+            canvas.DrawString(maxDays.ToString(), MARGIN_LEFT + chartWidth, MARGIN_TOP + chartHeight + 5, 40, 20,
+                HorizontalAlignment.Left, VerticalAlignment.Top);
+        }
+
+        private void DrawLines(ICanvas canvas, float chartWidth, float chartHeight, double globalMin, double globalMax) {
+            foreach (var line in Lines) {
+                if (line.Prices == null || line.Prices.Length < 2) continue;
+
+                DrawSingleLine(canvas, line, chartWidth, chartHeight, globalMin, globalMax);
+            }
+        }
+
+        private void DrawSingleLine(ICanvas canvas, LineDataDTO line, float chartWidth, float chartHeight, double globalMin, double globalMax) {
+            float stepX = chartWidth / (line.Prices.Length - 1);
+            var path = new PathF();
+
+            for (int i = 0; i < line.Prices.Length; i++) {
+                float x = MARGIN_LEFT + i * stepX;
+                float y = MARGIN_TOP + chartHeight - (float)((line.Prices[i] - globalMin) / (globalMax - globalMin) * chartHeight);
+
+                if (i == 0)
+                    path.MoveTo(x, y);
+                else
+                    path.LineTo(x, y);
+            }
+
+            canvas.StrokeColor = line.Color;
+            canvas.StrokeSize = 2;
+            canvas.DrawPath(path);
         }
     }
 }

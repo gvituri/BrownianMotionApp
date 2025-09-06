@@ -38,7 +38,8 @@
                 <Button Grid.Column="1"
                         Text="Randomizar"
                         HorizontalOptions="End"
-                        StyleClass="FilledButton">
+                        StyleClass="FilledButton"
+                        Command="{Binding RandomizeCommand}">
                     <Button.ImageSource>
                         <FontImageSource FontFamily="MaterialSharp"
                                          Size="20"
