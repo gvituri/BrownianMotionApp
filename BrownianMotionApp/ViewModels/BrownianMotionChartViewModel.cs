@@ -83,5 +83,15 @@ namespace BrownianMotionApp.ViewModels {
             MeanReturn = Math.Round((_random.NextDouble() * 20) - 10, 2);
             NumDays = _random.Next(30, 365);
         }
+
+        [RelayCommand]
+        void StepUpSimulationCount() {
+            NumSimulations++;
+        }
+
+        [RelayCommand]
+        void StepDownSimulationCount() {
+            NumSimulations--;
+        }
     }
 }

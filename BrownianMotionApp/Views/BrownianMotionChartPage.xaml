@@ -85,7 +85,8 @@
                     <Grid ColumnDefinitions="100,100">
                         <Button Grid.Column="0"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                CornerRadius="0">
+                                CornerRadius="0"
+                                Command="{Binding StepDownSimulationCountCommand}">
                             <Button.ImageSource>
                                 <FontImageSource FontFamily="MaterialSharp"
                                                  Size="20"
@@ -95,7 +96,8 @@
                         </Button>
                         <Button Grid.Column="1"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                CornerRadius="0">
+                                CornerRadius="0"
+                                Command="{Binding StepUpSimulationCountCommand}">
                             <Button.ImageSource>
                                 <FontImageSource FontFamily="MaterialSharp"
                                                  Size="20"
