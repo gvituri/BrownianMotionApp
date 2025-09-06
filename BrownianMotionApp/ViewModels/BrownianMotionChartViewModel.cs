@@ -32,6 +32,7 @@ namespace BrownianMotionApp.ViewModels {
         }
 
         public async Task InitializeAsync() {
+            Generate();
         }
 
         [ObservableProperty]

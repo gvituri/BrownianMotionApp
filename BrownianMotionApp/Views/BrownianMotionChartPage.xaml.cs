@@ -10,14 +10,7 @@ public partial class BrownianMotionChartPage : ContentPage {
         InitializeComponent();
         BindingContext = viewModel;
         WindowSizingHelper.MaximizeWindow(App.Current!.Windows[0]);
-        System.Threading.Tasks.Task.Factory.StartNew(() =>
-        {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await viewModel.InitializeAsync();
-            });
-        });
-
+        
         _drawable = new BrownianMotionDrawable();
         brownianMotionChartView.Drawable = _drawable;
 
@@ -28,5 +21,14 @@ public partial class BrownianMotionChartPage : ContentPage {
                 brownianMotionChartView.Invalidate();
             }
         };
+
+        System.Threading.Tasks.Task.Factory.StartNew(() =>
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await viewModel.InitializeAsync();
+            });
+        });
+
     }
 }
