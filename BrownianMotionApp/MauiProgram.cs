@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BrownianMotionApp.ViewModels;
+using BrownianMotionApp.Views;
+using Microsoft.Extensions.Logging;
 
 namespace BrownianMotionApp
 {
@@ -18,6 +20,9 @@ namespace BrownianMotionApp
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddTransient<BrownianMotionChartPage>();
+            builder.Services.AddTransient<BrownianMotionChartViewModel>();
 
             return builder.Build();
         }
