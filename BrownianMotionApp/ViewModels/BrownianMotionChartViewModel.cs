@@ -13,5 +13,8 @@ namespace BrownianMotionApp.ViewModels {
         public BrownianMotionChartViewModel(IBrownianMotionService brownianMotionService) {
             _brownianMotionService = brownianMotionService;
         }
+
+        public async Task InitializeAsync() {
+        }
     }
 }
