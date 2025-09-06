@@ -1,6 +1,8 @@
 ﻿using BrownianMotionApp.ViewModels;
 using BrownianMotionApp.Views;
+using InputKit.Handlers;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 
 namespace BrownianMotionApp
 {
@@ -11,10 +13,17 @@ namespace BrownianMotionApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureMauiHandlers(handlers =>
+                {
+                    handlers.AddInputKitHandlers();
+                })
+                .UseUraniumUI()
+                .UseUraniumUIMaterial()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddMaterialSymbolsFonts();
                 });
 
 #if DEBUG
