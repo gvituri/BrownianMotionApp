@@ -7,20 +7,12 @@ using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Utils.Drawables {
     public class BrownianMotionDrawable : IDrawable {
-        public List<LineDataDTO> Lines { get; set; } = new List<LineDataDTO>();
+        public List<LineData> Lines { get; set; } = new List<LineData>();
 
         private const float MARGIN_LEFT = 80;
         private const float MARGIN_BOTTOM = 60;
         private const float MARGIN_TOP = 20;
         private const float MARGIN_RIGHT = 20;
-
-        public void AddLine(double[] prices, Color color, string name = "") {
-            Lines.Add(new LineDataDTO(prices, color, name));
-        }
-
-        public void ClearLines() {
-            Lines.Clear();
-        }
 
         public void Draw(ICanvas canvas, RectF dirtyRect) {
             if (Lines == null || !Lines.Any() || Lines.All(l => l.Prices == null || l.Prices.Length < 2))
@@ -123,7 +115,7 @@ namespace BrownianMotionApp.Utils.Drawables {
             }
         }
 
-        private void DrawSingleLine(ICanvas canvas, LineDataDTO line, float chartWidth, float chartHeight, double globalMin, double globalMax) {
+        private void DrawSingleLine(ICanvas canvas, LineData line, float chartWidth, float chartHeight, double globalMin, double globalMax) {
             float stepX = chartWidth / (line.Prices.Length - 1);
             var path = new PathF();
 

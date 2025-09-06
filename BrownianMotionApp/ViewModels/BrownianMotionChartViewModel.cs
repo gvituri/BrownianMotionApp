@@ -52,7 +52,7 @@ namespace BrownianMotionApp.ViewModels {
         int numSimulations = 5;
 
         [ObservableProperty]
-        List<LineDataDTO> lines = new();
+        List<LineData> lines = new();
 
         [RelayCommand]
         void SelectedPaletteChanged(string selectedPalette) {
@@ -75,7 +75,7 @@ namespace BrownianMotionApp.ViewModels {
         [RelayCommand]
         void Generate() {
 
-            List<LineDataDTO> newLines = new();
+            List<LineData> newLines = new();
             for (int i = 0; i < NumSimulations; i++) {
                 var prices = _brownianMotionService.GenerateBrownianMotion(
                     Volatility / 100.0,
@@ -86,9 +86,7 @@ namespace BrownianMotionApp.ViewModels {
 
                 var color = _lineColors[i % _lineColors.Length];
 
-                var name = $"Simulação {i+1}";
-
-                var lineData = new LineDataDTO(prices, color, name);
+                var lineData = new LineData(prices, color);
                 newLines.Add(lineData);
             }
 

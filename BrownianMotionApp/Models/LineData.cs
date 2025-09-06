@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Models {
-    public class LineDataDTO {
+    public class LineData {
         public double[] Prices { get; set; }
         public Color Color { get; set; }
-        public string Name { get; set; }
 
-        public LineDataDTO(double[] prices, Color color, string name = "") {
+        public LineData(double[] prices, Color color) {
             Prices = prices;
             Color = color;
-            Name = name;
         }
     }
 }
