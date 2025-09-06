@@ -82,9 +82,28 @@
                 <validations:MinMaxNumericValidation MinValue="0"
                                                      MaxValue="10"/>
                 <material:TextField.Attachments>
-                    <Stepper Minimum="1"
-                             Maximum="10"
-                             Value="{Binding NumSimulations}" />
+                    <Grid ColumnDefinitions="100,100">
+                        <Button Grid.Column="0"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                CornerRadius="0">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialSharp"
+                                                 Size="20"
+                                                 Glyph="{x:Static icons:MaterialSharp.Minimize}"
+                                                 Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                            </Button.ImageSource>
+                        </Button>
+                        <Button Grid.Column="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                CornerRadius="0">
+                            <Button.ImageSource>
+                                <FontImageSource FontFamily="MaterialSharp"
+                                                 Size="20"
+                                                 Glyph="{x:Static icons:MaterialSharp.Add}"
+                                                 Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                            </Button.ImageSource>
+                        </Button>
+                    </Grid>
                 </material:TextField.Attachments>
             </material:TextField>
 
