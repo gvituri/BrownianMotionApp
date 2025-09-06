@@ -1,8 +1,11 @@
-﻿using BrownianMotionApp.ViewModels;
+﻿using BrownianMotionApp.Services;
+using BrownianMotionApp.Services.Interfaces;
+using BrownianMotionApp.ViewModels;
 using BrownianMotionApp.Views;
 using InputKit.Handlers;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
+using UraniumUI.Dialogs;
 
 namespace BrownianMotionApp
 {
@@ -29,6 +32,7 @@ namespace BrownianMotionApp
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<IBrownianMotionService, BrownianMotionService>();
 
             builder.Services.AddTransient<BrownianMotionChartPage>();
             builder.Services.AddTransient<BrownianMotionChartViewModel>();

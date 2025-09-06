@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Services.Interfaces {
-    internal class IBrownianMotionService {
+    public interface IBrownianMotionService {
+        double[] GenerateBrownianMotion(double sigma, double mean, double initialPrice, int numDays);
     }
 }
