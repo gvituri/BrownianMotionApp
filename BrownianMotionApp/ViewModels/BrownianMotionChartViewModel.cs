@@ -1,9 +1,12 @@
 ﻿using BrownianMotionApp.Models;
+using BrownianMotionApp.Services;
 using BrownianMotionApp.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -14,18 +17,7 @@ namespace BrownianMotionApp.ViewModels {
         private readonly IBrownianMotionService _brownianMotionService;
         private readonly Random _random = new();
 
-        private readonly Color[] _lineColors = new Color[] {
-            Colors.MediumPurple,
-            Colors.Orange,
-            Colors.Green,
-            Colors.Red,
-            Colors.Blue,
-            Colors.Yellow,
-            Colors.Pink,
-            Colors.Cyan,
-            Colors.Magenta,
-            Colors.Lime
-        };
+        private Color[] _lineColors = ColorPalettesHelper.GetPalette(ColorPalette.Material);
 
         public BrownianMotionChartViewModel(IBrownianMotionService brownianMotionService) {
             _brownianMotionService = brownianMotionService;
@@ -34,6 +26,15 @@ namespace BrownianMotionApp.ViewModels {
         public async Task InitializeAsync() {
             Generate();
         }
+
+        [ObservableProperty]
+        private ObservableCollection<string> paletteTypes =
+            new ObservableCollection<string>(
+                Enum.GetNames(typeof(ColorPalette)).ToList()
+            );
+
+        [ObservableProperty]
+        string selectedPalette = "Material";
 
         [ObservableProperty]
         double initialPrice = 200;
@@ -52,6 +53,24 @@ namespace BrownianMotionApp.ViewModels {
 
         [ObservableProperty]
         List<LineDataDTO> lines = new();
+
+        [RelayCommand]
+        void SelectedPaletteChanged(string selectedPalette) {
+            if (string.IsNullOrEmpty(selectedPalette)
+                || selectedPalette == SelectedPalette) return;
+
+            _lineColors = ColorPalettesHelper.GetPalette(Enum.Parse<ColorPalette>(selectedPalette));
+
+            if (Lines == null || !Lines.Any())
+                return;
+
+            for (int i = 0; i < Lines.Count; i++) {
+                var color = _lineColors[i % _lineColors.Length];
+                Lines[i].Color = color;
+            }
+
+            Lines = Lines.ToList();
+        }
 
         [RelayCommand]
         void Generate() {

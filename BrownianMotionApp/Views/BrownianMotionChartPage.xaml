@@ -75,39 +75,52 @@
                                                          MaxValue="1825" />
                 </material:TextField>
 
-                <material:TextField Title="Número de Simulações"
-                                    Text="{Binding NumSimulations}">
-                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
-                    <validations:IntegerValidation />
-                    <validations:MinMaxNumericValidation MinValue="0"
-                                                         MaxValue="10" />
-                    <material:TextField.Attachments>
-                        <Grid ColumnDefinitions="100,100">
-                            <Button Grid.Column="0"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                    CornerRadius="0"
-                                    Command="{Binding StepDownSimulationCountCommand}">
-                                <Button.ImageSource>
-                                    <FontImageSource FontFamily="MaterialSharp"
-                                                     Size="20"
-                                                     Glyph="{x:Static icons:MaterialSharp.Minimize}"
-                                                     Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
-                                </Button.ImageSource>
-                            </Button>
-                            <Button Grid.Column="1"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                    CornerRadius="0"
-                                    Command="{Binding StepUpSimulationCountCommand}">
-                                <Button.ImageSource>
-                                    <FontImageSource FontFamily="MaterialSharp"
-                                                     Size="20"
-                                                     Glyph="{x:Static icons:MaterialSharp.Add}"
-                                                     Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
-                                </Button.ImageSource>
-                            </Button>
-                        </Grid>
-                    </material:TextField.Attachments>
-                </material:TextField>
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="25">
+
+                    <material:TextField Grid.Column="0"
+                                        Title="Número de Simulações"
+                                        Text="{Binding NumSimulations}">
+                        <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                        <validations:IntegerValidation />
+                        <validations:MinMaxNumericValidation MinValue="0"
+                                                             MaxValue="10" />
+                        <material:TextField.Attachments>
+                            <Grid ColumnDefinitions="50,50">
+                                <Button Grid.Column="0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                        CornerRadius="0"
+                                        Command="{Binding StepDownSimulationCountCommand}">
+                                    <Button.ImageSource>
+                                        <FontImageSource FontFamily="MaterialSharp"
+                                                         Size="20"
+                                                         Glyph="{x:Static icons:MaterialSharp.Minimize}"
+                                                         Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                                    </Button.ImageSource>
+                                </Button>
+                                <Button Grid.Column="1"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                        CornerRadius="0"
+                                        Command="{Binding StepUpSimulationCountCommand}">
+                                    <Button.ImageSource>
+                                        <FontImageSource FontFamily="MaterialSharp"
+                                                         Size="20"
+                                                         Glyph="{x:Static icons:MaterialSharp.Add}"
+                                                         Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                                    </Button.ImageSource>
+                                </Button>
+                            </Grid>
+                        </material:TextField.Attachments>
+                    </material:TextField>
+
+                    <material:DropdownField Grid.Column="1"
+                                            Title="Cores"
+                                            SelectedItem="{Binding SelectedPalette}"
+                                            ItemsSource="{Binding PaletteTypes}"
+                                            SelectedItemChangedCommand="{Binding SelectedPaletteChangedCommand}"
+                                            AllowClear="False" />
+                </Grid>
+
 
                 <Button Text="Gerar"
                         StyleClass="FilledButton"
