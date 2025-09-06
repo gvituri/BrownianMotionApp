@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrownianMotionApp", "BrownianMotionApp\BrownianMotionApp.csproj", "{974D1400-9DD8-4AC2-8339-CFEF77664CCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrownianMotionAppTests", "BrownianMotionAppTests\BrownianMotionAppTests.csproj", "{D13D06E1-19D9-479E-B031-20FCB8BA2D64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{974D1400-9DD8-4AC2-8339-CFEF77664CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{974D1400-9DD8-4AC2-8339-CFEF77664CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{974D1400-9DD8-4AC2-8339-CFEF77664CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D13D06E1-19D9-479E-B031-20FCB8BA2D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D13D06E1-19D9-479E-B031-20FCB8BA2D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D13D06E1-19D9-479E-B031-20FCB8BA2D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D13D06E1-19D9-479E-B031-20FCB8BA2D64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
