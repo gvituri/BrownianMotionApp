@@ -48,7 +48,7 @@ namespace BrownianMotionApp.ViewModels {
         int numDays = 200;
 
         [ObservableProperty]
-        int numIterations = 5;
+        int numSimulations = 5;
 
         [ObservableProperty]
         List<LineDataDTO> lines = new();
@@ -57,7 +57,7 @@ namespace BrownianMotionApp.ViewModels {
         void Generate() {
 
             List<LineDataDTO> newLines = new();
-            for (int i = 0; i < NumIterations; i++) {
+            for (int i = 0; i < NumSimulations; i++) {
                 var prices = _brownianMotionService.GenerateBrownianMotion(
                     Volatility / 100.0,
                     MeanReturn / 100.0,

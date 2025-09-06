@@ -7,8 +7,10 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:icons="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:inputValidations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:drawables="clr-namespace:BrownianMotionApp.Utils.Drawables"
-             Title="Gerador de Movimnto Browniano">
+             xmlns:validations="clr-namespace:BrownianMotionApp.Utils.Validations"
+             Title="Gerador de Movimento Browniano">
 
     <ContentPage.Resources>
         <drawables:BrownianMotionDrawable x:Key="brownianMotionDrawable"/>
@@ -17,7 +19,7 @@
     <Grid ColumnDefinitions="*,*"
           RowDefinitions="*"
           ColumnSpacing="25"
-          Margin="100">
+          Margin="100,50">
 
         <GraphicsView x:Name="brownianMotionChartView"
                       Grid.Column="0"
@@ -51,15 +53,37 @@
 
             <material:TextField Title="Preço Inicial"
                                 Text="{Binding InitialPrice}">
+                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
+                <validations:PositiveNumericValidation />
             </material:TextField>
             <material:TextField Title="Volatilidade Média (%)"
                                 Text="{Binding Volatility}">
+                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
+                <validations:PositiveOrZeroNumericValidation />
             </material:TextField>
             <material:TextField Title="Retorno Médio (%)"
                                 Text="{Binding MeanReturn}">
+                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
+                <validations:MinMaxNumericValidation MinValue="-100"
+                                                     MaxValue="100"/>
             </material:TextField>
             <material:TextField Title="Tempo (dias)"
                                 Text="{Binding NumDays}">
+                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
+                <validations:IntegerValidation />
+            </material:TextField>
+
+            <material:TextField Title="Número de Simulações"
+                                Text="{Binding NumSimulations}">
+                <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                <validations:IntegerValidation />
+                <validations:MinMaxNumericValidation MinValue="0"
+                                                     MaxValue="10"/>
+                <material:TextField.Attachments>
+                    <Stepper Minimum="1"
+                             Maximum="10"
+                             Value="{Binding NumSimulations}" />
+                </material:TextField.Attachments>
             </material:TextField>
 
             <Button Text="Gerar"
