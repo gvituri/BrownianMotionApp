@@ -83,7 +83,7 @@
                                         Text="{Binding NumSimulations}">
                         <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
                         <validations:IntegerValidation />
-                        <validations:MinMaxNumericValidation MinValue="0"
+                        <validations:MinMaxNumericValidation MinValue="1"
                                                              MaxValue="10" />
                         <material:TextField.Attachments>
                             <Grid ColumnDefinitions="50,50">
