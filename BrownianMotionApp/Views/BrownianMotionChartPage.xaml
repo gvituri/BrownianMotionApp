@@ -114,7 +114,7 @@
                     </material:TextField>
 
                     <material:DropdownField Grid.Column="1"
-                                            Title="Cores"
+                                            Title="Paleta Cores"
                                             SelectedItem="{Binding SelectedPalette}"
                                             ItemsSource="{Binding PaletteTypes}"
                                             SelectedItemChangedCommand="{Binding SelectedPaletteChangedCommand}"
