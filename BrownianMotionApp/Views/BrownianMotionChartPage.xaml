@@ -13,9 +13,9 @@
              Title="Gerador de Movimento Browniano">
 
     <ContentPage.Resources>
-        <drawables:BrownianMotionDrawable x:Key="brownianMotionDrawable"/>
+        <drawables:BrownianMotionDrawable x:Key="brownianMotionDrawable" />
     </ContentPage.Resources>
-    
+
     <Grid ColumnDefinitions="*,*"
           RowDefinitions="*"
           ColumnSpacing="25"
@@ -25,101 +25,102 @@
                       Grid.Column="0"
                       Drawable="{StaticResource brownianMotionDrawable}"
                       VerticalOptions="Fill"
-                      HorizontalOptions="Fill"/>
+                      HorizontalOptions="Fill" />
 
-        <input:FormView Grid.Column="1"
-                        Spacing="25"
-                        SubmitCommand="{Binding GenerateCommand}">
-            <Grid ColumnDefinitions="*,*"
-                  ColumnSpacing="25">
+        <ScrollView Grid.Column="1">
+            <input:FormView Spacing="25"
+                            SubmitCommand="{Binding GenerateCommand}">
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="25">
 
-                <Label Grid.Column="0"
-                       Text="Parâmetros"
-                       Style="{StaticResource Headline}" />
+                    <Label Grid.Column="0"
+                           Text="Parâmetros"
+                           Style="{StaticResource Headline}" />
 
-                <Button Grid.Column="1"
-                        Text="Randomizar"
-                        HorizontalOptions="End"
+                    <Button Grid.Column="1"
+                            Text="Randomizar"
+                            HorizontalOptions="End"
+                            StyleClass="FilledButton"
+                            Command="{Binding RandomizeCommand}">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialSharp"
+                                             Size="20"
+                                             Glyph="{x:Static icons:MaterialSharp.Casino}"
+                                             Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" />
+                        </Button.ImageSource>
+                    </Button>
+                </Grid>
+
+                <material:TextField Title="Preço Inicial"
+                                    Text="{Binding InitialPrice}">
+                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                    <validations:PositiveNumericValidation />
+                </material:TextField>
+                <material:TextField Title="Volatilidade Média (%)"
+                                    Text="{Binding Volatility}">
+                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                    <validations:PositiveOrZeroNumericValidation />
+                </material:TextField>
+                <material:TextField Title="Retorno Médio (%)"
+                                    Text="{Binding MeanReturn}">
+                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                    <validations:MinMaxNumericValidation MinValue="-100"
+                                                         MaxValue="100" />
+                </material:TextField>
+                <material:TextField Title="Tempo (dias)"
+                                    Text="{Binding NumDays}">
+                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                    <validations:IntegerValidation />
+                    <validations:MinMaxNumericValidation MinValue="1"
+                                                         MaxValue="1825" />
+                </material:TextField>
+
+                <material:TextField Title="Número de Simulações"
+                                    Text="{Binding NumSimulations}">
+                    <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
+                    <validations:IntegerValidation />
+                    <validations:MinMaxNumericValidation MinValue="0"
+                                                         MaxValue="10" />
+                    <material:TextField.Attachments>
+                        <Grid ColumnDefinitions="100,100">
+                            <Button Grid.Column="0"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                    CornerRadius="0"
+                                    Command="{Binding StepDownSimulationCountCommand}">
+                                <Button.ImageSource>
+                                    <FontImageSource FontFamily="MaterialSharp"
+                                                     Size="20"
+                                                     Glyph="{x:Static icons:MaterialSharp.Minimize}"
+                                                     Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                                </Button.ImageSource>
+                            </Button>
+                            <Button Grid.Column="1"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
+                                    CornerRadius="0"
+                                    Command="{Binding StepUpSimulationCountCommand}">
+                                <Button.ImageSource>
+                                    <FontImageSource FontFamily="MaterialSharp"
+                                                     Size="20"
+                                                     Glyph="{x:Static icons:MaterialSharp.Add}"
+                                                     Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
+                                </Button.ImageSource>
+                            </Button>
+                        </Grid>
+                    </material:TextField.Attachments>
+                </material:TextField>
+
+                <Button Text="Gerar"
                         StyleClass="FilledButton"
-                        Command="{Binding RandomizeCommand}">
+                        input:FormView.IsSubmitButton="True"
+                        Grid.Column="0">
                     <Button.ImageSource>
                         <FontImageSource FontFamily="MaterialSharp"
                                          Size="20"
-                                         Glyph="{x:Static icons:MaterialSharp.Casino}"
+                                         Glyph="{x:Static icons:MaterialSharp.Refresh}"
                                          Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" />
                     </Button.ImageSource>
                 </Button>
-            </Grid>
-
-            <material:TextField Title="Preço Inicial"
-                                Text="{Binding InitialPrice}">
-                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
-                <validations:PositiveNumericValidation />
-            </material:TextField>
-            <material:TextField Title="Volatilidade Média (%)"
-                                Text="{Binding Volatility}">
-                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
-                <validations:PositiveOrZeroNumericValidation />
-            </material:TextField>
-            <material:TextField Title="Retorno Médio (%)"
-                                Text="{Binding MeanReturn}">
-                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
-                <validations:MinMaxNumericValidation MinValue="-100"
-                                                     MaxValue="100"/>
-            </material:TextField>
-            <material:TextField Title="Tempo (dias)"
-                                Text="{Binding NumDays}">
-                <inputValidations:RequiredValidation Message="Este campo é obrigatório"/>
-                <validations:IntegerValidation />
-                <validations:MinMaxNumericValidation MinValue="1"
-                                                     MaxValue="1825" />
-            </material:TextField>
-
-            <material:TextField Title="Número de Simulações"
-                                Text="{Binding NumSimulations}">
-                <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
-                <validations:IntegerValidation />
-                <validations:MinMaxNumericValidation MinValue="0"
-                                                     MaxValue="10"/>
-                <material:TextField.Attachments>
-                    <Grid ColumnDefinitions="100,100">
-                        <Button Grid.Column="0"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                CornerRadius="0"
-                                Command="{Binding StepDownSimulationCountCommand}">
-                            <Button.ImageSource>
-                                <FontImageSource FontFamily="MaterialSharp"
-                                                 Size="20"
-                                                 Glyph="{x:Static icons:MaterialSharp.Minimize}"
-                                                 Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
-                            </Button.ImageSource>
-                        </Button>
-                        <Button Grid.Column="1"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}"
-                                CornerRadius="0"
-                                Command="{Binding StepUpSimulationCountCommand}">
-                            <Button.ImageSource>
-                                <FontImageSource FontFamily="MaterialSharp"
-                                                 Size="20"
-                                                 Glyph="{x:Static icons:MaterialSharp.Add}"
-                                                 Color="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}" />
-                            </Button.ImageSource>
-                        </Button>
-                    </Grid>
-                </material:TextField.Attachments>
-            </material:TextField>
-
-            <Button Text="Gerar"
-                    StyleClass="FilledButton"
-                    input:FormView.IsSubmitButton="True"
-                    Grid.Column="0">
-                <Button.ImageSource>
-                    <FontImageSource FontFamily="MaterialSharp"
-                                     Size="20"
-                                     Glyph="{x:Static icons:MaterialSharp.Refresh}"
-                                     Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" />
-                </Button.ImageSource>
-            </Button>
-        </input:FormView>
+            </input:FormView>
+        </ScrollView>
     </Grid>
 </ContentPage>
