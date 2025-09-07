@@ -55,7 +55,7 @@ namespace BrownianMotionApp.ViewModels {
         List<LineData> lines = new();
 
         [RelayCommand]
-        void SelectedPaletteChanged(string selectedPalette) {
+        public void SelectedPaletteChanged(string selectedPalette) {
             if (string.IsNullOrEmpty(selectedPalette)
                 || selectedPalette == SelectedPalette) return;
 
@@ -73,7 +73,7 @@ namespace BrownianMotionApp.ViewModels {
         }
 
         [RelayCommand]
-        void Generate() {
+        public void Generate() {
 
             List<LineData> newLines = new();
             for (int i = 0; i < NumSimulations; i++) {
@@ -94,7 +94,7 @@ namespace BrownianMotionApp.ViewModels {
         }
 
         [RelayCommand]
-        void Randomize() {
+        public void Randomize() {
             InitialPrice = Math.Round(_random.NextDouble() * (1000 - 10) + 10, 2);
             Volatility = Math.Round(_random.NextDouble() * 100, 2);
             MeanReturn = Math.Round((_random.NextDouble() * 20) - 10, 2);
@@ -103,12 +103,12 @@ namespace BrownianMotionApp.ViewModels {
         }
 
         [RelayCommand]
-        void StepUpSimulationCount() {
+        public void StepUpSimulationCount() {
             NumSimulations++;
         }
 
         [RelayCommand]
-        void StepDownSimulationCount() {
+        public void StepDownSimulationCount() {
             NumSimulations--;
         }
     }
