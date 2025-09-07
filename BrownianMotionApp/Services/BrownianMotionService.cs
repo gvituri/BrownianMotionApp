@@ -1,12 +1,26 @@
 ﻿using BrownianMotionApp.Services.Interfaces;
 
+/// <summary>
+/// Serviço responsável por gerar simulações de Movimento Browniano geométrico.
+/// </summary>
 public class BrownianMotionService : IBrownianMotionService {
     private readonly Random _rand;
 
+    /// <summary>
+    /// Construtor que permite injetar uma instância de Random com seed para testes ou reprodutibilidade.
+    /// </summary>
     public BrownianMotionService(Random? rand = null) {
         _rand = rand ?? new Random();
     }
 
+    /// <summary>
+    /// Gera uma série de preços simulados com base em parâmetros estatísticos.
+    /// </summary>
+    /// <param name="sigma">Volatilidade do ativo.</param>
+    /// <param name="mean">Retorno médio esperado.</param>
+    /// <param name="initialPrice">Preço inicial da simulação.</param>
+    /// <param name="numDays">Número de dias a serem simulados.</param>
+    /// <returns>Array com os preços simulados ao longo do período.</returns>
     public double[] GenerateBrownianMotion(double sigma, double mean, double initialPrice, int numDays) {
         double[] prices = new double[numDays];
         prices[0] = initialPrice;
