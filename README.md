@@ -3,10 +3,10 @@ Gerador de Movimento Browniano com input de parâmetros para controle de simula�
 
 ---
 ## Geração de Múltiplas Simulações
-![Geração de Múltiplas Simulações](./assets/multipleSimulationGeneration.gif)
+![Geração de Múltiplas Simulações](./Assets/multipleSimulationGeneration.gif)
 ## Validação Completa de Campos
-![Validação Completa de Campos](./assets/fieldValidations.gif)
+![Validação Completa de Campos](./Assets/fieldValidations.gif)
 ## Controle de Paleta de Cores
-![Controle de Paleta de Cores](./assets/colorPaletteChange.gif)
+![Controle de Paleta de Cores](./Assets/colorPaletteChange.gif)
 ## Randomizador de Parâmetros
-![Randomizador de Parâmetros](./assets/randomizeParameters.gif)
+![Randomizador de Parâmetros](./Assets/randomizeParameters.gif)
