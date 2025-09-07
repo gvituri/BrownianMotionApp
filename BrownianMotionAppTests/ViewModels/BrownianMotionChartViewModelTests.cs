@@ -28,7 +28,7 @@ namespace BrownianMotionAppTests.ViewModels {
         public void Generate_ShouldCallServiceAndSetLines() {
             var vm = new BrownianMotionChartViewModel(_mockService.Object) {
                 NumSimulations = 3,
-                NumDays = 10
+                NumSteps = 10
             };
 
             vm.Generate();
