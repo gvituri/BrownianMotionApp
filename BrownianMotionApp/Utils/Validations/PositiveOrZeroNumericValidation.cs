@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Utils.Validations {
+
+    /// <summary>
+    /// Validação que garante que o valor informado seja um número positivo ou zero.
+    /// </summary>
     public class PositiveOrZeroNumericValidation : IValidation {
         public string Message { get; set; } = "Este campo só pode conter valores positivos ou zero";
 

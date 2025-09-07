@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Utils.Validations {
+
+    /// <summary>
+    /// Validação que garante que o valor esteja dentro de um intervalo numérico (mínimo e máximo).
+    /// </summary>
     public class MinMaxNumericValidation : IValidation {
         public double MinValue { get; set; } = double.MinValue;
         public double MaxValue { get; set; } = double.MaxValue;

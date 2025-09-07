@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BrownianMotionApp.Utils.Validations {
+
+    /// <summary>
+    /// Validação que garante que o valor informado seja um número inteiro.
+    /// </summary>
     public class IntegerValidation : IValidation {
         public string Message { get; set; } = "O valor deve ser um número inteiro";
 

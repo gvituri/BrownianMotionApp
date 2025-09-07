@@ -72,6 +72,9 @@ namespace BrownianMotionApp.ViewModels {
             Lines = Lines.ToList();
         }
 
+        /// <summary>
+        /// Gera novas simulações de Movimento Browniano com base nos parâmetros selecionados.
+        /// </summary>
         [RelayCommand]
         public void Generate() {
 
@@ -93,6 +96,9 @@ namespace BrownianMotionApp.ViewModels {
             Lines = newLines;
         }
 
+        /// <summary>
+        /// Randomiza parâmetros e gera novas simulações.
+        /// </summary>
         [RelayCommand]
         public void Randomize() {
             InitialPrice = Math.Round(_random.NextDouble() * (1000 - 10) + 10, 2);
