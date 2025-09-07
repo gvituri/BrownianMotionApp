@@ -23,7 +23,7 @@ namespace BrownianMotionApp.ViewModels {
             _brownianMotionService = brownianMotionService;
         }
 
-        public async Task InitializeAsync() {
+        public void InitializeAsync() {
             Generate();
         }
 
@@ -99,6 +99,7 @@ namespace BrownianMotionApp.ViewModels {
             Volatility = Math.Round(_random.NextDouble() * 100, 2);
             MeanReturn = Math.Round((_random.NextDouble() * 20) - 10, 2);
             NumDays = _random.Next(30, 365);
+            Generate();
         }
 
         [RelayCommand]
