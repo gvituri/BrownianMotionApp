@@ -64,7 +64,7 @@ namespace BrownianMotionApp.Utils.Drawables {
             canvas.FontColor = Colors.White;
             canvas.FontSize = 14;
 
-            canvas.DrawString("Dias", MARGIN_LEFT + chartWidth / 2, MARGIN_TOP + chartHeight + 20, 50, 20,
+            canvas.DrawString("Tempo", MARGIN_LEFT + chartWidth / 2, MARGIN_TOP + chartHeight + 20, 50, 20,
                 HorizontalAlignment.Left, VerticalAlignment.Top);
         }
 

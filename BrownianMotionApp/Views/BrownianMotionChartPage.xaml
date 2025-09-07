@@ -67,12 +67,12 @@
                     <validations:MinMaxNumericValidation MinValue="-100"
                                                          MaxValue="100" />
                 </material:TextField>
-                <material:TextField Title="Tempo (dias)"
-                                    Text="{Binding NumDays}">
+                <material:TextField Title="Tempo (Duração do Gerador de Preços)"
+                                    Text="{Binding NumSteps}">
                     <inputValidations:RequiredValidation Message="Este campo é obrigatório" />
                     <validations:IntegerValidation />
                     <validations:MinMaxNumericValidation MinValue="1"
-                                                         MaxValue="1825" />
+                                                         MaxValue="1000" />
                 </material:TextField>
 
                 <Grid ColumnDefinitions="*,*"

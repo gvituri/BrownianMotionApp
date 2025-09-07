@@ -19,12 +19,12 @@ public class BrownianMotionService : IBrownianMotionService {
     /// <param name="sigma">Volatilidade do ativo.</param>
     /// <param name="mean">Retorno médio esperado.</param>
     /// <param name="initialPrice">Preço inicial da simulação.</param>
-    /// <param name="numDays">Número de dias a serem simulados.</param>
+    /// <param name="numSteps">Número de passos a serem simulados.</param>
     /// <returns>Array com os preços simulados ao longo do período.</returns>
-    public double[] GenerateBrownianMotion(double sigma, double mean, double initialPrice, int numDays) {
-        double[] prices = new double[numDays];
+    public double[] GenerateBrownianMotion(double sigma, double mean, double initialPrice, int numSteps) {
+        double[] prices = new double[numSteps];
         prices[0] = initialPrice;
-        for (int i = 1; i < numDays; i++) {
+        for (int i = 1; i < numSteps; i++) {
             double u1 = 1.0 - _rand.NextDouble();
             double u2 = 1.0 - _rand.NextDouble();
             double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);

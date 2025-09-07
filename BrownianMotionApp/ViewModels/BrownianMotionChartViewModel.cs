@@ -46,7 +46,7 @@ namespace BrownianMotionApp.ViewModels {
         double meanReturn = 0.1;
 
         [ObservableProperty]
-        int numDays = 200;
+        int numSteps = 200;
 
         [ObservableProperty]
         int numSimulations = 5;
@@ -56,8 +56,7 @@ namespace BrownianMotionApp.ViewModels {
 
         [RelayCommand]
         public void SelectedPaletteChanged(string selectedPalette) {
-            if (string.IsNullOrEmpty(selectedPalette)
-                || selectedPalette == SelectedPalette) return;
+            if (string.IsNullOrEmpty(selectedPalette)) return;
 
             _lineColors = ColorPalettesHelper.GetPalette(Enum.Parse<ColorPalette>(selectedPalette));
 
@@ -84,7 +83,7 @@ namespace BrownianMotionApp.ViewModels {
                     Volatility / 100.0,
                     MeanReturn / 100.0,
                     InitialPrice,
-                    NumDays
+                    NumSteps
                 );
 
                 var color = _lineColors[i % _lineColors.Length];
@@ -104,7 +103,7 @@ namespace BrownianMotionApp.ViewModels {
             InitialPrice = Math.Round(_random.NextDouble() * (1000 - 10) + 10, 2);
             Volatility = Math.Round(_random.NextDouble() * 100, 2);
             MeanReturn = Math.Round((_random.NextDouble() * 20) - 10, 2);
-            NumDays = _random.Next(30, 365);
+            NumSteps = _random.Next(30, 365);
             Generate();
         }
 
